@@ -1,6 +1,7 @@
 .tick:hover {
 	max-height: 30px;
 	text-align: left;
+	opacity: 1;
 }
 .tick {
 	max-height: 30px;
@@ -9,6 +10,11 @@
 }
 .cross {
 	max-height: 20px;
+	opacity: .3;
+}
+.cross:hover {
+	max-height: 20px;
+	opacity: 1;
 }
 .strike{
 	text-decoration: line-through;
@@ -32,6 +38,7 @@ h1 {
 .list {
 	width : 400px;
 	text-align : center;
+	height: 350px;
 }
 .mainContainer {
 	list-style-type: none;
@@ -50,4 +57,14 @@ h1 {
 }
 .todoColumn {
 	width: 180px;
+}
+button {
+	background-color: white; 
+	color: black;
+    border: none;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }

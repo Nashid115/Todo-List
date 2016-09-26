@@ -1,46 +1,63 @@
 var todoList = new Array();
 var statusType;
-var count;
+var count = 0;
 $('#todo').keyup(function(key) {
-	if(key.keyCode==13 && $('#todo').val()!=="") {
+	if(key.keyCode==13 && $('#todo').val()!="") {
 		var todo = $('#todo').val();
 		count++;
+		changeCount();
 		todoList.push({
 			"name" : todo, "status" : "active"
 		})
-		// getIndex(todo);
 		$("table").append('<tr><td class="tickColumn"><img id="tick" class="tick" src = "assets/images/green-tick-in-circle-1147519.jpg"></td><td class="todoColumn">' + todo + '</td><td class="crossColumn"><img class="cross" id="cross" src="assets/images/icon-02-512.png"></td></tr>');
 		$('#todo').val("");
 	}
 })
 $('table').on('click', 'tr', function(event) {
 	if($(event.target).is('#tick')) {
-		count--;
-		$(this).addClass('strike');
-		if(statusType == "active") {
-			$(this).hide();
+		if(todoList[$(this).index()].status == "active") {
+			count--;
+			changeCount();
+			$(this).addClass('strike');
+			if(statusType == "active") {
+				$(this).hide();
+			}
+			complete($(this).index());
 		}
-		complete($(this).index());
+		else {
+			count++;
+			changeCount();
+			$(this).removeClass('strike');
+			if(statusType == "complete") {
+				$(this).hide();
+			}
+			complete($(this).index());	
+		}
 	}
 	else if($(event.target).is('#cross')) {
-		count--;
-		del($(this).index())
+		if(todoList[$(this).index()].status == "active") {
+			count--;
+			changeCount();
+		}
+		del($(this).index());
 		$(this).remove();
 	}
 });
-// $('table').on('dblclick', '.todoColumn', function(event) {
-	
-// 	console.log("DONE");
-// })
+function changeCount() {
+	if(count > 0) {
+		$("#numberOfItems").empty().append(count + " items left");
+	}
+	else if(count == 0) {
+		$("#numberOfItems").empty();
+	}
+}
 function del(id) {
 	todoList = _.filter(todoList, function(item) {
 		return item != todoList[id];
 	})
-	console.log(todoList);
 }
 function complete(id) {
-	console.log(todoList,id);
-	todoList[id].status = "complete";
+	todoList[id].status = (todoList[id].status == "active") ? "complete" : "active";
 }
 function active() {
 	statusType = "active";
@@ -67,8 +84,6 @@ function clearCompleted() {
 }
 function displayList() {
 	$("tr").each(function(item) {
-		console.log(todoList);
-		console.log($("tr"));
 		if(todoList[item].status == statusType || statusType == "all") {
 			$(this).show();
 		}
@@ -77,3 +92,30 @@ function displayList() {
 		}
 	})
 }
+$('table').on('dblclick', 'tr', function(event) {
+	id = $(this).index();
+	var el = $($(".todoColumn")[id]);
+	todo = el.context.innerHTML;
+	el.empty();
+	el.append('<input type="text" id="edit">');
+	$("#edit").val(todo);
+	$('#edit').keyup(function(key) {
+		if(key.keyCode==13 && $('#edit').val()!="") {
+			console.log("entered");
+			var todo = $('#edit').val();
+			console.log(todo);
+			$("#edit").remove();
+			console.log(el);
+			el.context.innerHTML = todo;
+		}
+		else if(key.keyCode==13 && $("#edit").val()=="") {
+			if(todoList[$(this).index()].status == "active") {
+				count--;
+				changeCount();
+			}
+			del(id);
+			console.log($("tr"));
+			$($("tr")[id]).remove();
+		}
+	})
+})
