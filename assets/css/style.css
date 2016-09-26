@@ -1,0 +1,53 @@
+.tick:hover {
+	max-height: 30px;
+	text-align: left;
+}
+.tick {
+	max-height: 30px;
+	text-align: left;
+	opacity: .3;
+}
+.cross {
+	max-height: 20px;
+}
+.strike{
+	text-decoration: line-through;
+}
+.normal {
+	text-decoration: none;
+}
+.todo {
+	width: 400px;
+    height: 25px;
+    font-family : Arial;
+    font-size : 20px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+h1 {
+	text-align : center;
+	font-family : Arial;
+    font-weight: normal;
+}
+.list {
+	width : 400px;
+	text-align : center;
+}
+.mainContainer {
+	list-style-type: none;
+	padding-left: 15px;
+    font-size : 18px;
+    font-family: Arial;
+    font-weight: normal;
+    text-align: left;
+    width: 440px;
+}
+.tickColumn {
+	width: 20px;
+}
+.crossColumn {
+	width: 40px;
+}
+.todoColumn {
+	width: 180px;
+}
