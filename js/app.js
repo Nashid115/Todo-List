@@ -99,23 +99,20 @@ $('table').on('dblclick', 'tr', function(event) {
 	el.empty();
 	el.append('<input type="text" id="edit">');
 	$("#edit").val(todo);
-	$('#edit').keyup(function(key) {
-		if(key.keyCode==13 && $('#edit').val()!="") {
-			console.log("entered");
+	$('#edit').on("keyup focusout",(function(key) {
+		console.log(key);
+		if((key.keyCode==13 || key.type == "focusout") && $('#edit').val()!="") {
 			var todo = $('#edit').val();
-			console.log(todo);
 			$("#edit").remove();
-			console.log(el);
 			el.context.innerHTML = todo;
 		}
-		else if(key.keyCode==13 && $("#edit").val()=="") {
+		else if((key.keyCode==13 || key.type == "focusout") && $("#edit").val()=="") {
 			if(todoList[$(this).index()].status == "active") {
 				count--;
 				changeCount();
 			}
 			del(id);
-			console.log($("tr"));
 			$($("tr")[id]).remove();
 		}
-	})
+	}))
 })
